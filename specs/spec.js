@@ -27,7 +27,6 @@ describe('Protractor Demo App', function() {
     firstEl.all(by.css('.submit-btn')).click();
 
     var changedEl = firstEl.element(by.css('.product-name'));
-
     expect(changedEl.getText()).toEqual('testName');
   });
 
