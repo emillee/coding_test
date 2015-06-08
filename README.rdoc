@@ -1,0 +1,31 @@
+Given a table of 1000 products with the following information: name, sku, category:
+
+1. Display them in a table
+
+2. Allow displaying only a specific category
+
+3. Allow editing single product information
+
+4. HTML Rendering should be done on client-side
+
+5. Write tests/specs
+
+6. Validate input and handle errors
+
+7. Seeds file that populates the data
+
+
+Bonus points:
+
+1. Rails
+
+2. Use of client-side framework: Ember CLI (preferred), AngularJS, React
+
+3. Use of Bootstrap SASS/LESS
+
+4. Client side validation
+
+5. Pagination
+
+6. Deploy to heroku
+

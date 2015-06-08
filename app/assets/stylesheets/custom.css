@@ -1,0 +1,11 @@
+@import url(https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css);
+
+body {
+  padding: 100px;
+}
+
+.myGrid {
+  padding: 100px;
+  width: 80%;
+  min-height: 250px;
+}

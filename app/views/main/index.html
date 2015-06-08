@@ -1,0 +1,80 @@
+<div class="container-fluid"
+  ng-controller="ProductController as prodCtrl">
+
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      Filter by category:
+
+      <select ng-change="prodCtrl.setCatFilter(prodCtrl.catFilter.vm)"
+        ng-model="prodCtrl.catFilter.vm"
+        ng-options="category for category in prodCtrl.allCategories">
+      </select>
+    </div>
+
+    <table class="table table-striped table-bordered table-condensed">
+      <thead>
+        <tr>
+          <th>Product Name</th>
+          <th>SKU</th>
+          <th>Category</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr dir-paginate="product in prodCtrl.products | 
+          itemsPerPage: 20" 
+          class="product-tr"
+          data-product-id="{{product.id}}">
+          <td ng-show="prodCtrl.editProduct.id != product.id" 
+            class="product-name"
+            id="{{'product-name-' + product.id}}">
+            {{product.name}}
+          </td> 
+          <td ng-show="prodCtrl.editProduct.id != product.id">
+            {{product.sku}}
+          </td>
+          <td ng-show="prodCtrl.editProduct.id != product.id">
+            {{product.category}}</td>
+          <td ng-click="prodCtrl.editProduct=product"
+            ng-show="prodCtrl.editProduct.id != product.id">
+            <a href class="edit-product">
+              Edit</a>
+          </td>
+
+          <form>
+            <td ng-if="prodCtrl.editProduct.id === product.id">
+              <input type="text" 
+                class="input-product-name"
+                ng-attr-id="{{ 'product-name-' + product.id }}"
+                name="product[name]"
+                value="product.name" 
+                ng-model="prodCtrl.editProduct.name">
+            </td>
+            <td ng-if="prodCtrl.editProduct.id === product.id">
+              <input type="text" 
+                name="product[sku]"
+                value="product.sku"
+                ng-model="prodCtrl.editProduct.sku">
+            </td>
+            <td ng-if="prodCtrl.editProduct.id === product.id">
+              <select 
+                ng-model="prodCtrl.editProduct.category"
+                ng-options="category for category in prodCtrl.allCategories">
+              </select>              
+            </td>
+            
+            <td ng-if="prodCtrl.editProduct.id === product.id">
+              <button class="submit-btn"
+                type="submit"
+                ng-click="prodCtrl.updateProduct(prodCtrl.editProduct)">
+                Submit</button>
+            </td>
+          </form>
+
+        </tr>
+      </tbody>
+    </table>
+   
+    <dir-pagination-controls></dir-pagination-controls>
+  </div>
+</div>
