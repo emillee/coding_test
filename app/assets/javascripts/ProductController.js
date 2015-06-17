@@ -14,11 +14,9 @@
     
     var vm = this;
 
-    // vm.catFilter      = {};
     vm.editProduct    = {};
     vm.getProducts    = getProducts;
     vm.queryOptions   = {};
-    vm.setCatFilter   = setCatFilter;
     vm.updateProduct  = updateProduct;
 
     // normally, this would be returned from server in a 
@@ -36,18 +34,14 @@
 
     function activate() {
       getProducts();
+      vm.queryOptions.page = 1;
     }
 
     function getProducts() {
-      // console.log('hey')
       ProductService.getProducts(vm.queryOptions).then(function(resp) {
-        // console.log(vm.queryOptions)
-        // console.log(resp)
         if (resp.status === 200) {
-          // vm.allProducts = resp.data.products;
           vm.products = resp.data.products;
           vm.num_pages = _.range(1, resp.data.num_pages + 1);
-          console.log(vm.num_pages)
         }
       });      
     }
@@ -57,11 +51,6 @@
         console.log(resp)
         vm.editProduct = {};
       });
-    }
-
-    function setCatFilter(filter) {
-      vm.queryOptions.cat
-      // vm.products = _.filter(vm.allProducts, { category: filter });
     }
 
   }
