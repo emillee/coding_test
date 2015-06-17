@@ -14,8 +14,10 @@
     
     var vm = this;
 
-    vm.catFilter      = {};
+    // vm.catFilter      = {};
     vm.editProduct    = {};
+    vm.getProducts    = getProducts;
+    vm.queryOptions   = {};
     vm.setCatFilter   = setCatFilter;
     vm.updateProduct  = updateProduct;
 
@@ -33,12 +35,21 @@
     activate();
 
     function activate() {
-      ProductService.getProducts().then(function(resp) {
+      getProducts();
+    }
+
+    function getProducts() {
+      // console.log('hey')
+      ProductService.getProducts(vm.queryOptions).then(function(resp) {
+        // console.log(vm.queryOptions)
+        // console.log(resp)
         if (resp.status === 200) {
-          vm.allProducts = resp.data;
-          vm.products = resp.data;
+          // vm.allProducts = resp.data.products;
+          vm.products = resp.data.products;
+          vm.num_pages = _.range(1, resp.data.num_pages + 1);
+          console.log(vm.num_pages)
         }
-      });
+      });      
     }
 
     function updateProduct(productObj) {
@@ -49,7 +60,8 @@
     }
 
     function setCatFilter(filter) {
-      vm.products = _.filter(vm.allProducts, { category: filter });
+      vm.queryOptions.cat
+      // vm.products = _.filter(vm.allProducts, { category: filter });
     }
 
   }

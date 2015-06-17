@@ -10,9 +10,23 @@
   function ProductService($http) {
     var vm = this;
 
-    vm.getProducts = function() {
+    vm.getProducts = function(options) {
+      console.log(options)
+      var theUrl = '/products.json';
+      var appendStr = '';
+
+      if (!!options['page']) {
+        appendStr = appendStr + '?page=' + options['page'];
+      } else {
+        appendStr = appendStr + '?page=1';
+      }
+
+      if (!!options['category']) {
+        appendStr = appendStr + '&category=' + options['category'];
+      }      
+
       return $http({
-        url: '/products.json',
+        url: theUrl + appendStr,
         method: 'GET'
       }).success(function(resp) {
         return resp;
