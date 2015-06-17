@@ -5,8 +5,8 @@
     <div class="panel-heading">
       Filter by category:
 
-      <select ng-change="prodCtrl.setCatFilter(prodCtrl.catFilter.vm)"
-        ng-model="prodCtrl.catFilter.vm"
+      <select ng-change="prodCtrl.queryOptions.page=1; prodCtrl.getProducts()"
+        ng-model="prodCtrl.queryOptions.category"
         ng-options="category for category in prodCtrl.allCategories">
       </select>
     </div>
@@ -75,6 +75,12 @@
       </tbody>
     </table>
    
-    <dir-pagination-controls></dir-pagination-controls>
+    <!-- <dir-pagination-controls></dir-pagination-controls> -->
   </div>
+    <span>Pages: </span>
+    <a href ng-repeat="num in prodCtrl.num_pages"
+      ng-class="{'active': num == prodCtrl.queryOptions.page}"
+      ng-click="prodCtrl.queryOptions.page=num; prodCtrl.getProducts()">
+      {{num}} 
+    </a>  
 </div>

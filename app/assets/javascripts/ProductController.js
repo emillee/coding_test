@@ -14,9 +14,9 @@
     
     var vm = this;
 
-    vm.catFilter      = {};
     vm.editProduct    = {};
-    vm.setCatFilter   = setCatFilter;
+    vm.getProducts    = getProducts;
+    vm.queryOptions   = {};
     vm.updateProduct  = updateProduct;
 
     // normally, this would be returned from server in a 
@@ -33,12 +33,17 @@
     activate();
 
     function activate() {
-      ProductService.getProducts().then(function(resp) {
+      getProducts();
+      vm.queryOptions.page = 1;
+    }
+
+    function getProducts() {
+      ProductService.getProducts(vm.queryOptions).then(function(resp) {
         if (resp.status === 200) {
-          vm.allProducts = resp.data;
-          vm.products = resp.data;
+          vm.products = resp.data.products;
+          vm.num_pages = _.range(1, resp.data.num_pages + 1);
         }
-      });
+      });      
     }
 
     function updateProduct(productObj) {
@@ -46,10 +51,6 @@
         console.log(resp)
         vm.editProduct = {};
       });
-    }
-
-    function setCatFilter(filter) {
-      vm.products = _.filter(vm.allProducts, { category: filter });
     }
 
   }

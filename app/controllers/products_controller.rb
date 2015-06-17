@@ -1,9 +1,24 @@
 class ProductsController < ApplicationController
 
   def index
-    @products = Product.all
+    page_size = Product::LIMIT
+    page_num = params[:page].to_i || 1;
+    offset = (page_num - 1) * page_size    
+
+    if params[:category]
+      @products = Product.where(category: params[:category])
+    else
+      @products = Product.all
+    end
+
+    # ordering by 'created_at' as specs don't specify
+    return_obj = {
+      products:  @products.order('created_at').limit(page_size).offset(offset),
+      num_pages: (@products.count / page_size).to_f.ceil
+    }
+
     respond_to do |format|
-      format.json { render json: @products }
+      format.json { render json: return_obj }
     end    
   end
 
@@ -21,6 +36,12 @@ class ProductsController < ApplicationController
       } 
     end
   end
+
+  # def config 
+  #   return_obj = {
+  #     num_products: Product.count
+  #   }
+  # end
 
 private
   
